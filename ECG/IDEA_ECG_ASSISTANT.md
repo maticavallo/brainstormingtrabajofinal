@@ -4,11 +4,22 @@
 
 ### El problema de negocio
 
-Las arritmias cardíacas afectan a más de 300 millones de personas en el mundo. Un electrocardiograma (ECG) genera datos que requieren interpretación especializada: un cardiólogo tarda entre 5-15 minutos en analizar un registro de 30 minutos, y hay escasez global de especialistas — especialmente en Latinoamérica.
+**El mercado**: Se realizan más de 300 millones de ECGs al año en el mundo (100M+ solo en EEUU). El mercado de monitoreo ECG con IA está valorado en $1.34B (2024) y se proyecta a $3.34B para 2029 (CAGR 20%). El mercado de wearables cardíacos (Apple Watch, KardiaMobile, parches ECG) crece a $1.98B y alcanzará $3.54B en 2030.
 
-**El gap**: Los datos del ECG existen, las bases de datos están disponibles (MIT-BIH, PhysioNet), y los modelos de Deep Learning ya pueden clasificar arritmias con altísima precisión. Sin embargo, **no existe una herramienta accesible en español** que combine detección automática con explicación clínica comprensible. Los sistemas actuales clasifican pero no explican — un paciente recibe "arritmia detectada" sin entender qué significa, qué riesgo implica, o cuándo debería ir a urgencias.
+**El usuario**: Pacientes con wearables ECG y clínicas de atención primaria en Latinoamérica. La región tiene 25,000-30,000 cardiólogos para una población de 650M — insuficiente para la demanda. Las enfermedades cardiovasculares son la primera causa de muerte en LATAM, y la carga se está trasladando de países de altos ingresos hacia la región por envejecimiento poblacional. En zonas rurales, un paciente puede esperar semanas para una consulta con cardiólogo.
 
-**La oportunidad**: Construir un asistente que no solo detecte arritmias (DL), sino que las explique en español clínico pero comprensible (LLM fine-tuned), con contexto clínico actualizado (RAG).
+**Los competidores y el gap**:
+
+| Producto | Qué hace | Qué NO hace |
+|----------|----------|-------------|
+| **AliveCor KardiaMobile** | ECG 1-lead, IA entrenada con 200K pacientes de Mayo Clinic. FDA-cleared para AFib, bradicardia, taquicardia. | Clasifica pero NO explica. Dice "Posible AFib" sin contexto clínico. Interface en inglés. |
+| **Apple Watch ECG** | ECG de muñeca, detecta AFib. | Sensibilidad baja (19% vs 89% de KardiaMobile en estudios head-to-head). Solo dice "ritmo sinusal" o "fibrilación auricular". Sin explicación. |
+| **Cardiologs (Philips)** | Plataforma cloud con IA, 20+ tipos de arritmias, 200M+ registros analizados. Sensibilidad AFib: 97%. | Solo para profesionales de salud (no pacientes). Requiere Holter clínico. No genera explicaciones en lenguaje natural. |
+| **Eko Health** | Estetoscopio digital + ECG + IA para detección de enfermedades cardíacas. FDA-cleared. | Dispositivo clínico, no consumer. No genera explicaciones para pacientes. |
+
+**El gap concreto**: Todos los competidores **clasifican** (Normal/AFib/arritmia), pero **ninguno explica** qué significa el resultado en lenguaje comprensible para el paciente. Ninguno opera en español con terminología clínica adaptada. Ninguno combina la clasificación con contexto de guías médicas actualizadas (RAG). Un paciente con Apple Watch que recibe "Posible fibrilación auricular" no sabe si debe ir a urgencias, esperar a su consulta programada, o ignorarlo.
+
+**La oportunidad**: Un asistente que cierre el gap entre "clasificación automática" y "comprensión del paciente": detecta arritmias (DL), explica qué significan sin alucinar (LLM fine-tuned), y aporta contexto de guías médicas actualizadas (RAG) — todo en español.
 
 ### El desafío técnico de AI
 

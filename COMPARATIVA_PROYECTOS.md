@@ -128,20 +128,26 @@ Dos candidatos para la práctica final del bootcamp de KeepCoding. Ambos compart
 
 Por las siguientes razones, ordenadas de mayor a menor peso:
 
-**1. Deep Learning es el diferenciador decisivo.**
-El bootcamp evalúa un pipeline de AI. ECG tiene un modelo de Deep Learning REAL que es el pilar central del proyecto, ya implementado, con F1=0.981 demostrado. Polymarket tiene DL como bonus opcional. Si el evaluador valora DL (y la mayoría lo hace), ECG gana automáticamente.
+**1. Fine-tuning + RAG anclado en datos concretos > especulación.**
+El fine-tuning de ECG tiene una ventaja estructural: cada respuesta del LLM se ancla en el output concreto del clasificador CNN (Normal/Anormal + confianza). Esto hace que las alucinaciones sean detectables y medibles. En Polymarket, los escenarios "What If" son hipotéticos por naturaleza — no hay ground truth para validar si la respuesta es correcta. Desde una perspectiva de AI engineering, un LLM que explica datos verificables es más robusto que uno que especula.
 
-**2. El pipeline DL → LLM → RAG es más coherente y técnicamente impresionante.**
-En ECG, cada componente depende del anterior: sin la CNN no hay clasificación, sin clasificación no hay qué explicar, sin RAG no hay contexto clínico. En Polymarket, el pipeline es LLM → RAG (lineal, sin DL obligatorio). La integración de modelos es lo que distingue un proyecto avanzado de uno estándar.
+**2. El pipeline DL → LLM → RAG demuestra integración de modelos.**
+En ECG, cada componente depende del anterior: sin la CNN no hay clasificación, sin clasificación no hay qué explicar, sin RAG no hay contexto clínico. Es un pipeline de AI real donde modelos distintos se encadenan. En Polymarket, el pipeline es LLM → RAG (lineal, sin integración multi-modelo). La orquestación de modelos heterogéneos (DL + LLM + retrieval) es lo que la industria demanda hoy.
 
-**3. El trabajo ya está avanzado.**
-El notebook de DL está completo. No es una promesa — son resultados. Esto reduce el riesgo de no terminar a tiempo y da una base sólida sobre la que construir.
+**3. Deep Learning ya implementado reduce riesgo.**
+El notebook de DL está completo con F1=0.981 demostrado. No es una promesa — son resultados. Esto da una base sólida y reduce el riesgo de no terminar a tiempo. Aunque un CNN para ECG es un problema académicamente resuelto, tenerlo funcionando es mejor que no tener DL.
 
-**4. Verificabilidad > Especulación.**
-Las respuestas de ECG se anclan en datos concretos (output del clasificador). Las de Polymarket son hipotéticas por naturaleza. Para un evaluador técnico, poder verificar que el sistema no alucina es un punto fuerte.
+**4. RAG con documentos clínicos tiene decisiones no triviales.**
+Ambos proyectos usan el mismo stack de RAG (FAISS + langchain), pero el dominio médico impone restricciones más exigentes: un chunk mal recuperado podría generar una explicación clínica incorrecta. Esto obliga a diseñar el retrieval con más cuidado y demuestra madurez en la implementación.
 
 **5. Impacto social.**
 Salud pública > mercados predictivos para una audiencia de bootcamp. No es lo más importante técnicamente, pero en la presentación final cuenta.
+
+### Matiz importante: qué vale más en la industria vs en el bootcamp
+
+Desde **AI engineering**, las skills más valiosas del pipeline son fine-tuning y RAG — no el CNN. Un CNN 1D para clasificación binaria es un problema resuelto desde ~2017. El verdadero desafío está en: cómo diseñar el dataset de fine-tuning para que el LLM no alucine información médica, cómo evaluar la calidad de las explicaciones generadas, y cómo hacer que el RAG recupere contexto relevante sin ruido.
+
+Sin embargo, para el **bootcamp**, tener DL implementado y funcionando sigue siendo un diferenciador — demuestra que se domina el stack completo. La clave es no confundir "el CNN es impresionante" con "el CNN es lo más difícil del proyecto".
 
 ### ¿Cuándo elegiría Polymarket?
 
@@ -150,23 +156,26 @@ Elegiría Polymarket si:
 - La originalidad del dominio es el factor #1 de evaluación
 - La presentación es más importante que la profundidad técnica
 - Hay mucho tiempo disponible y se puede completar el notebook 5 de DL
+- Se quiere demostrar razonamiento causal con LLMs (tarea más ambiciosa que explicar clasificaciones)
 
 ### Escenario ideal
 
-Si fuera posible, el proyecto más fuerte sería **ECGAssistant con la profundidad de documentación de Polymarket**. El .md de Polymarket tiene ejemplos de interacción más desarrollados y escenarios más variados — esa calidad de documentación aplicada al proyecto ECG lo haría imbatible.
+Si fuera posible, el proyecto más fuerte sería **ECGAssistant con la ambición de razonamiento de Polymarket**. El fine-tuning de Polymarket es más ambicioso (razonamiento causal) — esa exigencia aplicada al dominio médico de ECG lo haría imbatible.
 
 ---
 
 ## Tabla Resumen de Scoring
 
+Los pesos reflejan la realidad de AI engineering moderna, donde fine-tuning y RAG son las skills más demandadas y complejas, por encima de DL clásico.
+
 | Criterio (peso) | Polymarket | ECG |
 |------------------|-----------|-----|
-| Deep Learning (30%) | 3/10 (opcional, no hecho) | **10/10** (central, hecho, F1=0.981) |
-| Pipeline integrado (20%) | 6/10 (LLM→RAG, lineal) | **9/10** (DL→LLM→RAG, cascada) |
-| Dataset (15%) | 8/10 (masivo, real) | 8/10 (real, prestigioso) |
-| Fine-tuning (15%) | 8/10 (ambicioso, causal) | 7/10 (sólido, verificable) |
-| RAG (10%) | 7/10 | 7/10 |
+| Fine-tuning LLM (25%) | 8/10 (ambicioso, razonamiento causal) | 7/10 (sólido, verificable, anclado en CNN) |
+| RAG (20%) | 7/10 (docs mixtos: datos reales + ficticios) | 8/10 (docs clínicos, fuentes AHA/ESC) |
+| Deep Learning (20%) | 3/10 (opcional, no implementado) | **9/10** (central, implementado, F1=0.981) |
+| Pipeline integrado (15%) | 6/10 (LLM→RAG, lineal) | **9/10** (DL→LLM→RAG, cascada multi-modelo) |
+| Dataset (10%) | 8/10 (masivo, 100K markets) | 8/10 (prestigioso, PhysioNet, series temporales) |
 | Presentación/Wow (10%) | 8/10 (escenarios llamativos) | 7/10 (dominio impactante) |
-| **Total ponderado** | **5.95/10** | **8.45/10** |
+| **Total ponderado** | **6.35/10** | **7.90/10** |
 
-**ECGAssistant gana por el peso decisivo del Deep Learning real e integrado.**
+**ECGAssistant gana por la combinación de pipeline integrado multi-modelo + verificabilidad del fine-tuning + DL real implementado.** La ventaja no es solo "tiene DL" sino que el DL alimenta al LLM, que se enriquece con RAG — cada pieza tiene un rol claro en el pipeline.
